@@ -67,7 +67,7 @@ from contextlib import contextmanager
 import pytest
 
 import numpy as np
-from numba import findlib
+from numba.misc import findlib
 from numba.cuda.cudadrv.driver import device_pointer
 from numba.cuda.cudadrv.drvapi import cu_stream
 from numba.cuda.cudadrv.devicearray import auto_device, is_cuda_ndarray
