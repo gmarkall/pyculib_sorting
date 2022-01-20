@@ -3,19 +3,16 @@
 #include <moderngpu/kernel_segsort.hxx>
 #include <stdint.h>
 
-namespace mgpu {
-std::string stringprintf(const char *format, ...) { return std::string(); }
-} // namespace mgpu
-
 namespace {
 
-template <class Tkey, class Tval>
-void segsortpairs(Tkey *d_keys, Tval *d_vals, int N, const int *d_segments,
-                  unsigned NumSegs, cudaStream_t stream) {
+template <class key_t, class val_t>
+void segsortpairs(key_t *d_keys, val_t *d_vals, uint32_t n_vals,
+                  const int32_t *d_segments, uint32_t n_segs,
+                  cudaStream_t stream) {
 
   mgpu::standard_context_t context;
-  mgpu::segmented_sort(d_keys, d_vals, N, d_segments, NumSegs,
-                       mgpu::less_t<Tkey>(), context);
+  mgpu::segmented_sort(d_keys, d_vals, n_vals, d_segments, n_segs,
+                       mgpu::less_t<key_t>(), context);
 }
 
 } // namespace
