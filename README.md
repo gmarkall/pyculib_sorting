@@ -3,9 +3,9 @@
 Pyculib\_sorting provides simplified interfaces to CUDA sorting libraries.
 At present it contains a wrapper around:
 
- * A radix sort implementation from [CUB](http://nvlabs.github.com/cub).
+ * A radix sort implementation from [CUB](https://github.com/NVIDIA/cub).
  * A segmented sort implementation from
-   [ModernGPU](http://nvlabs.github.io/moderngpu)
+   [ModernGPU](https://github.com/moderngpu/moderngpu/wiki)
 
 Pyculib\_sorting is predominantly used by [Pyculib](https://github.com/numba/pyculib) to provide
 sorting routines.
