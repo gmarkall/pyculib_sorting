@@ -1,9 +1,7 @@
 #include <stdint.h>
-#include <moderngpu.cuh>
-#include <util/mgpucontext.h>
-#include "mgpucontext.cu"
+#include <moderngpu/context.hxx>
+#include <moderngpu/kernel_segsort.hxx>
 #include "dllexport.h"
-// #include <src/mgpuutil.cpp>
 
 namespace mgpu{
 	std::string stringprintf(const char* format, ...) { return std::string(); }
@@ -11,27 +9,17 @@ namespace mgpu{
 
 namespace {
 
-using namespace mgpu;
-
 template<class Tkey, class Tval>
-void segsortpairs( Tkey *d_keys,
-				   Tval *d_vals,
-				   unsigned N,
-				   const int *d_segments,
-				   unsigned NumSegs,
-				   cudaStream_t stream	)
+void segsortpairs(Tkey *d_keys,
+  Tval *d_vals,
+  int N,
+  const int *d_segments,
+  unsigned NumSegs,
+  cudaStream_t stream)
 {
 
-    ContextPtr context = CreateCudaDeviceAttachStream(stream);
-
-    SegSortPairsFromIndices(
-    	d_keys,
-    	d_vals,
-    	N,
-    	d_segments,
-    	NumSegs,
-    	*context,
-    	false);
+  mgpu::standard_context_t context;
+  mgpu::segmented_sort(d_keys, d_vals, N, d_segments, NumSegs, mgpu::less_t<Tkey>(), context);
 
 }
 
